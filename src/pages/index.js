@@ -4,7 +4,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import Register from "@/components/register";
+import Register from "../components/Register";
 
 export default function Home() {
   return (
