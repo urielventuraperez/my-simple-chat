@@ -1,6 +1,6 @@
 import { Rubik } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
-import { deepOrange, red, indigo } from '@mui/material/colors';
+import { deepOrange, red, blueGrey } from '@mui/material/colors';
 
 export const rubik = Rubik({
   weight: ['300', '400', '500', '700'],
@@ -18,8 +18,8 @@ const theme = createTheme({
       light: deepOrange[50],
     },
     secondary: {
-      main: indigo[500],
-      light: indigo[50],
+      main: blueGrey[300],
+      light: blueGrey[50],
     },
     error: {
       main: red.A400,

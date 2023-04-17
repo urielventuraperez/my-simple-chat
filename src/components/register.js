@@ -4,8 +4,6 @@ import {
   Link,
   TextField,
   Button,
-  FormControlLabel,
-  Checkbox,
 } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 

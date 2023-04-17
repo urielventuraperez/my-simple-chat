@@ -1,16 +1,53 @@
 import React from "react";
-import { Box, Paper, Card, CardContent, Typography, Avatar } from "@mui/material";
+import PropTypes from "prop-types";
+import {
+  Box,
+  Paper,
+  Card,
+  CardContent,
+  Typography,
+  Avatar,
+} from "@mui/material";
 
-const Message = () => (
-  <Box sx={{display: 'flex', alignItems: 'end'}}>
-    <Avatar>
-      R
-    </Avatar>
-    <Card variant="outlined" sx={{ width: "80%", borderRadius: 10 }}>
+const Message = ({ itsMe }) => (
+  <Box
+    sx={{
+      display: "flex",
+      alignItems: "end",
+      my: 1,
+      justifyContent: itsMe ? "end" : "start",
+    }}
+  >
+    <Avatar>R</Avatar>
+    <Card
+      variant="outlined"
+      sx={{
+        backgroundColor: (theme) =>
+          itsMe ? theme.palette.secondary.main : theme.palette.common.white,
+        minWidth: "30%",
+        maxWidth: "70%",
+        borderRadius: 10,
+      }}
+    >
       <CardContent>
-        <Typography variant="body1">Testing</Typography>
-        <Typography variant="caption" gutterBottom>
-          Testing
+        <Typography
+          sx={{
+            color: (theme) =>
+              itsMe ? theme.palette.common.white : theme.palette.common.black,
+          }}
+          variant="body1"
+        >
+          Lorem ipsum dolor sit amet
+        </Typography>
+        <Typography
+          sx={{
+            color: (theme) =>
+              itsMe ? theme.palette.common.white : theme.palette.common.black,
+          }}
+          variant="caption"
+          gutterBottom
+        >
+          Lorem ipsum dolor sit amet
         </Typography>
       </CardContent>
     </Card>
@@ -25,11 +62,29 @@ const Messages = () => {
         backgroundColor: (theme) => theme.palette.secondary.light,
         height: "60vh",
         padding: 2,
+        overflowY: "scroll",
       }}
     >
       <Message />
+      <Message />
+      <Message />
+      <Message />
+      <Message />
+      <Message itsMe />
+      <Message />
+      <Message />
+      <Message />
+      <Message itsMe />
+      <Message />
+      <Message />
+      <Message />
+      <Message itsMe />
     </Paper>
   );
+};
+
+Message.propTypes = {
+  itsMe: PropTypes.bool.isRequired,
 };
 
 export default Messages;
