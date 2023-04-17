@@ -2,8 +2,9 @@ import Head from "next/head";
 import { Grid, Typography, Box } from "@mui/material";
 import Navbar from "@/components/Navbar";
 import Messages from "@/components/Messages";
+import MessageForm from "@/components/MessageForm";
 
-export default function Home() {
+export default function Chat() {
   return (
     <>
       <Head>
@@ -21,6 +22,7 @@ export default function Home() {
           >
             <Typography variant="h6">Recent chat</Typography>
             <Messages />
+            <MessageForm />
           </Box>
         </Grid>
       </Grid>
