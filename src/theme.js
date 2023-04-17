@@ -1,8 +1,8 @@
-import { Roboto } from 'next/font/google';
+import { Rubik } from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
+import { deepOrange, red } from '@mui/material/colors';
 
-export const roboto = Roboto({
+export const rubik = Rubik({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
@@ -13,7 +13,9 @@ export const roboto = Roboto({
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: deepOrange[500],
+      dark: deepOrange[700],
+      light: deepOrange[100],
     },
     secondary: {
       main: '#19857b',
@@ -23,7 +25,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
+    fontFamily: rubik.style.fontFamily,
   },
 });
 
