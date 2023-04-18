@@ -1,8 +1,9 @@
 import { Grid, Box, Link, TextField, Button } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
+import { useRouter } from "next/router";
 import { useForm, Controller } from "react-hook-form";
 
-const Register = () => {
+const RegistrationForm = () => {
+  const router = useRouter();
   const { handleSubmit, control, watch } = useForm();
 
   const onRegisterUser = (data) => {
@@ -102,19 +103,9 @@ const Register = () => {
           Create account
         </Button>
       </form>
-      <Button
-        disableElevation
-        startIcon={<GoogleIcon />}
-        fullWidth
-        size="small"
-        variant="outlined"
-        sx={{ mt: 1.5, mb: 2 }}
-      >
-        Sign up with Google
-      </Button>
       <Grid container>
         <Grid item>
-          <Link href="#" variant="body2">
+          <Link href="#" onClick={(e) => { e.preventDefault(); router.push('login'); }} variant="body2">
             {"Log in"}
           </Link>
         </Grid>
@@ -123,4 +114,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegistrationForm;
