@@ -25,11 +25,7 @@ const LoginForm = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
 
   const onLoginUser = (data) => {
-    login(data, () => {
-      setTimeout(() => {
-        router.push("/");
-      }, 1000);
-    });
+    login(data);
   };
 
   const handleClickShowPassword = () => {
@@ -119,6 +115,7 @@ const LoginForm = () => {
           }}
         />
         <Button
+          disabled={loading}
           type="submit"
           disableElevation
           fullWidth

@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import LoginForm from "@/components/LoginForm";
 
-export default function Home() {
+export default function LoginPage() {
   return (
     <>
       <Head>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { signOut } from "firebase/auth";
+import { useRouter } from "next/router";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import favicon from "../../public/favicon.png";
 import Image from "next/image";
 import { firebaseAuth } from "@/firebase/config";
+import { useAuthValue } from "@/context/AuthContext";
 
 function Navbar() {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -24,6 +26,8 @@ function Navbar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const router = useRouter();
 
   return (
     <AppBar position="static">
@@ -94,7 +98,7 @@ function Navbar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <MenuItem onClick={() => signOut(firebaseAuth)}>
+                <MenuItem onClick={ () => { signOut(firebaseAuth); router.push('/login'); }}>
                   <Typography textAlign="center">Log out</Typography>
                 </MenuItem>
               </Menu>

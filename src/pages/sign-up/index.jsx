@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import RegistrationForm from "@/components/RegistrationForm";
 
-export default function Home() {
+export default function SignUpPage() {
   return (
     <>
       <Head>
