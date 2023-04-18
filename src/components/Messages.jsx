@@ -21,7 +21,7 @@ const Message = ({ isCurrentUser, text, author, avatar }) => (
       justifyContent: isCurrentUser ? "end" : "start",
     }}
   >
-    <Tooltip title={author || '--'}>{avatar ? <Avatar src={avatar} /> : <Avatar src={avatar}>{author.charAt(0).toUpperCase()}</Avatar>}</Tooltip>
+    <Tooltip title={author || '--'}>{avatar ? <Avatar src={avatar} /> : <Avatar>{author.charAt(0).toUpperCase()}</Avatar>}</Tooltip>
     <Card
       variant="outlined"
       sx={{
@@ -72,8 +72,6 @@ const Messages = () => {
     getChatMessages();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  console.log(messages);
 
   return (
     <Paper

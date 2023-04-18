@@ -17,8 +17,7 @@ import { firebaseAuth } from "@/firebase/config";
 import { useAuthValue } from "@/context/AuthContext";
 
 function Navbar() {
-  const {user} = useAuthValue();
-  console.log(user);
+  const { user: { photoURL, email, displayName } } = useAuthValue();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -79,9 +78,9 @@ function Navbar() {
               My simple chat
             </Typography>
             <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
+              <Tooltip title={`Welcome ${displayName || email}`}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  {photoURL ? <Avatar src={photoURL} /> : <Avatar>{(displayName || email).charAt(0).toUpperCase()}</Avatar>}
                 </IconButton>
               </Tooltip>
               <Menu
