@@ -7,19 +7,25 @@ import {
   Button,
   InputAdornment,
   IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useUserFunctions } from "@/firebase/useUserFunctions";
 
 const LoginForm = () => {
   const router = useRouter();
   const { handleSubmit, control } = useForm();
+  const { loaded, loading, error, login } = useUserFunctions();
   const [isShowPassword, setIsShowPassword] = useState(false);
 
-  const onRegisterUser = (data) => {
-    console.log(data);
+  const onLoginUser = (data) => {
+    login(data, () => {
+      setTimeout(()=>{ router.push('/') }, 1000)
+    });
   };
 
   const handleClickShowPassword = () => {
@@ -32,7 +38,7 @@ const LoginForm = () => {
 
   return (
     <Box noValidate sx={{ mt: 1 }}>
-      <form onSubmit={handleSubmit(onRegisterUser)}>
+      <form onSubmit={handleSubmit(onLoginUser)}>
         <Controller
           defaultValue=""
           name="email"
@@ -138,6 +144,12 @@ const LoginForm = () => {
           </Link>
         </Grid>
       </Grid>
+      <Snackbar open={loaded || Boolean(error)} autoHideDuration={1000}>
+        <Alert severity={loaded ? "success" : "error"} sx={{ width: "100%" }}>
+          { loaded ? "Welcome!" : null }
+          { error ? error : null }
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

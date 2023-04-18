@@ -8,20 +8,28 @@ import {
   Button,
   InputAdornment,
   IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import { useForm, Controller } from "react-hook-form";
+import { useUserFunctions } from "@/firebase/useUserFunctions";
 
 const RegistrationForm = () => {
   const router = useRouter();
   const { handleSubmit, control, watch } = useForm();
+
+  const { loaded, loading, error, register } = useUserFunctions();
+
   const [isShowPassword, setIsShowPassword] = useState({
     password: false,
     confirmPassword: false,
   });
 
   const onRegisterUser = (data) => {
-    console.log(data);
+    register(data, () => {
+      setTimeout(()=>{ router.push('login') }, 1000)
+    });
   };
 
   const handleClickShowPassword = (passwordInput) => {
@@ -153,6 +161,7 @@ const RegistrationForm = () => {
           }}
         />
         <Button
+          disabled={loading}
           type="submit"
           disableElevation
           fullWidth
@@ -177,6 +186,12 @@ const RegistrationForm = () => {
           </Link>
         </Grid>
       </Grid>
+      <Snackbar open={loaded || Boolean(error)} autoHideDuration={1000}>
+        <Alert severity={loaded ? "success" : "error"} sx={{ width: "100%" }}>
+          { loaded ? "Your account has been created!" : null }
+          { error ? error : null }
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
