@@ -1,13 +1,38 @@
-import { Grid, Box, Link, TextField, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+  Grid,
+  Box,
+  Link,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import { useForm, Controller } from "react-hook-form";
 
 const RegistrationForm = () => {
   const router = useRouter();
   const { handleSubmit, control, watch } = useForm();
+  const [isShowPassword, setIsShowPassword] = useState({
+    password: false,
+    confirmPassword: false,
+  });
 
   const onRegisterUser = (data) => {
     console.log(data);
+  };
+
+  const handleClickShowPassword = (passwordInput) => {
+    setIsShowPassword({
+      ...isShowPassword,
+      [passwordInput]: !isShowPassword[passwordInput],
+    });
+  };
+
+  const handleMouseEvents = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -20,7 +45,6 @@ const RegistrationForm = () => {
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextField
               autoComplete="email"
-              autoFocus
               margin="normal"
               fullWidth
               value={value}
@@ -46,7 +70,6 @@ const RegistrationForm = () => {
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextField
               autoComplete="password"
-              autoFocus
               margin="normal"
               fullWidth
               value={value}
@@ -54,7 +77,26 @@ const RegistrationForm = () => {
               error={!!error}
               helperText={error ? error.message : null}
               label="Password"
-              type="password"
+              type={isShowPassword.password ? "text" : "password"}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => handleClickShowPassword("password")}
+                      onMouseDown={handleMouseEvents}
+                      onMouseUp={handleMouseEvents}
+                      edge="end"
+                    >
+                      {isShowPassword.password ? (
+                        <Visibility />
+                      ) : (
+                        <VisibilityOff />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
           rules={{
@@ -72,7 +114,6 @@ const RegistrationForm = () => {
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextField
               autoComplete="password"
-              autoFocus
               margin="normal"
               fullWidth
               value={value}
@@ -80,12 +121,31 @@ const RegistrationForm = () => {
               error={!!error}
               helperText={error ? error.message : null}
               label="Confirm Password"
-              type="password"
+              type={isShowPassword.confirmPassword ? "text" : "password"}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => handleClickShowPassword("confirmPassword")}
+                      onMouseDown={handleMouseEvents}
+                      onMouseUp={handleMouseEvents}
+                      edge="end"
+                    >
+                      {isShowPassword.confirmPassword ? (
+                        <Visibility />
+                      ) : (
+                        <VisibilityOff />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
           rules={{
             validate: (val) => {
-              if (watch('password') != val) {
+              if (watch("password") != val) {
                 return "Your passwords do no match";
               }
             },
@@ -105,7 +165,14 @@ const RegistrationForm = () => {
       </form>
       <Grid container>
         <Grid item>
-          <Link href="#" onClick={(e) => { e.preventDefault(); router.push('login'); }} variant="body2">
+          <Link
+            href="login"
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("login");
+            }}
+            variant="body2"
+          >
             {"Log in"}
           </Link>
         </Grid>

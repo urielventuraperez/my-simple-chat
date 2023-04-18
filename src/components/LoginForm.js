@@ -1,14 +1,33 @@
-import { Grid, Box, Link, TextField, Button } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Grid,
+  Box,
+  Link,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/router";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const LoginForm = () => {
   const router = useRouter();
   const { handleSubmit, control } = useForm();
+  const [isShowPassword, setIsShowPassword] = useState(false);
 
   const onRegisterUser = (data) => {
     console.log(data);
+  };
+
+  const handleClickShowPassword = () => {
+    setIsShowPassword(!isShowPassword);
+  };
+
+  const handleMouseEvents = (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -47,7 +66,6 @@ const LoginForm = () => {
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <TextField
               autoComplete="password"
-              autoFocus
               margin="normal"
               fullWidth
               value={value}
@@ -55,7 +73,26 @@ const LoginForm = () => {
               error={!!error}
               helperText={error ? error.message : null}
               label="Password"
-              type="password"
+              type={isShowPassword ? "text" : "password"}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={() => handleClickShowPassword("confirmPassword")}
+                      onMouseDown={handleMouseEvents}
+                      onMouseUp={handleMouseEvents}
+                      edge="end"
+                    >
+                      {isShowPassword.confirmPassword ? (
+                        <Visibility />
+                      ) : (
+                        <VisibilityOff />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           )}
           rules={{
@@ -89,7 +126,14 @@ const LoginForm = () => {
       </Button>
       <Grid container>
         <Grid item>
-          <Link href="#" onClick={(e) => { e.preventDefault(); router.push('sign-up'); }} variant="body2">
+          <Link
+            href="sign-up"
+            onClick={(e) => {
+              e.preventDefault();
+              router.push("sign-up");
+            }}
+            variant="body2"
+          >
             {"Create an account"}
           </Link>
         </Grid>
