@@ -9,13 +9,13 @@ import {
   Avatar,
 } from "@mui/material";
 
-const Message = ({ itsMe }) => (
+const Message = ({ isCurrentUser }) => (
   <Box
     sx={{
       display: "flex",
       alignItems: "end",
       my: 1,
-      justifyContent: itsMe ? "end" : "start",
+      justifyContent: isCurrentUser ? "end" : "start",
     }}
   >
     <Avatar>R</Avatar>
@@ -23,7 +23,9 @@ const Message = ({ itsMe }) => (
       variant="outlined"
       sx={{
         backgroundColor: (theme) =>
-          itsMe ? theme.palette.secondary.main : theme.palette.common.white,
+          isCurrentUser
+            ? theme.palette.secondary.main
+            : theme.palette.common.white,
         minWidth: "30%",
         maxWidth: "70%",
         borderRadius: 10,
@@ -33,7 +35,9 @@ const Message = ({ itsMe }) => (
         <Typography
           sx={{
             color: (theme) =>
-              itsMe ? theme.palette.common.white : theme.palette.common.black,
+              isCurrentUser
+                ? theme.palette.common.white
+                : theme.palette.common.black,
           }}
           variant="body1"
         >
@@ -42,7 +46,9 @@ const Message = ({ itsMe }) => (
         <Typography
           sx={{
             color: (theme) =>
-              itsMe ? theme.palette.common.white : theme.palette.common.black,
+              isCurrentUser
+                ? theme.palette.common.white
+                : theme.palette.common.black,
           }}
           variant="caption"
           gutterBottom
@@ -70,21 +76,25 @@ const Messages = () => {
       <Message />
       <Message />
       <Message />
-      <Message itsMe />
+      <Message isCurrentUser />
       <Message />
       <Message />
       <Message />
-      <Message itsMe />
+      <Message isCurrentUser />
       <Message />
       <Message />
       <Message />
-      <Message itsMe />
+      <Message isCurrentUser />
     </Paper>
   );
 };
 
+Message.defaultProps = {
+  isCurrentUser: false,
+};
+
 Message.propTypes = {
-  itsMe: PropTypes.bool.isRequired,
+  isCurrentUser: PropTypes.bool,
 };
 
 export default Messages;
