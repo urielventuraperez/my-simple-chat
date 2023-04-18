@@ -15,6 +15,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useRouter } from "next/router";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useUserFunctions } from "@/firebase/useUserFunctions";
+import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { firebaseAuth } from "@/firebase/config";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -24,7 +26,9 @@ const LoginForm = () => {
 
   const onLoginUser = (data) => {
     login(data, () => {
-      setTimeout(()=>{ router.push('/') }, 1000)
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
     });
   };
 
@@ -34,6 +38,11 @@ const LoginForm = () => {
 
   const handleMouseEvents = (e) => {
     e.preventDefault();
+  };
+
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithRedirect(firebaseAuth, provider);
   };
 
   return (
@@ -127,6 +136,7 @@ const LoginForm = () => {
         size="small"
         variant="outlined"
         sx={{ mt: 1.5, mb: 2 }}
+        onClick={googleSignIn}
       >
         Sign up with Google
       </Button>
@@ -146,8 +156,8 @@ const LoginForm = () => {
       </Grid>
       <Snackbar open={loaded || Boolean(error)} autoHideDuration={1000}>
         <Alert severity={loaded ? "success" : "error"} sx={{ width: "100%" }}>
-          { loaded ? "Welcome!" : null }
-          { error ? error : null }
+          {loaded ? "Welcome!" : null}
+          {error ? error : null}
         </Alert>
       </Snackbar>
     </Box>
