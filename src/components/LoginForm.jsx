@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Grid,
   Box,
@@ -17,8 +17,10 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useUserFunctions } from "@/firebase/useUserFunctions";
 import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 import { firebaseAuth } from "@/firebase/config";
+import { useAuthValue } from "@/context/AuthContext";
 
 const LoginForm = () => {
+  const {user} = useAuthValue();
   const router = useRouter();
   const { handleSubmit, control } = useForm();
   const { loaded, loading, error, login } = useUserFunctions();
@@ -40,6 +42,13 @@ const LoginForm = () => {
     const provider = new GoogleAuthProvider();
     signInWithRedirect(firebaseAuth, provider);
   };
+
+  useEffect(()=>{
+    if(user) {
+      router.push('/');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <Box noValidate sx={{ mt: 1 }}>

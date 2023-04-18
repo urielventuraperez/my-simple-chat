@@ -30,5 +30,5 @@ export const ProtectRoute = ({ children }) => {
   if (!user){
     return <LoginPage />; 
   }
-  return <Chat />;
+  return children;
 };

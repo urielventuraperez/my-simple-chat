@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import {
   Box,
@@ -7,9 +7,12 @@ import {
   CardContent,
   Typography,
   Avatar,
+  Tooltip,
 } from "@mui/material";
+import { useMessagesFunctions } from "@/firebase/useMessagesFunctions";
+import { useAuthValue } from "@/context/AuthContext";
 
-const Message = ({ isCurrentUser }) => (
+const Message = ({ isCurrentUser, text, author, avatar }) => (
   <Box
     sx={{
       display: "flex",
@@ -18,7 +21,7 @@ const Message = ({ isCurrentUser }) => (
       justifyContent: isCurrentUser ? "end" : "start",
     }}
   >
-    <Avatar>R</Avatar>
+    <Tooltip title={author || '--'}>{avatar ? <Avatar src={avatar} /> : <Avatar src={avatar}>{author.charAt(0).toUpperCase()}</Avatar>}</Tooltip>
     <Card
       variant="outlined"
       sx={{
@@ -41,7 +44,7 @@ const Message = ({ isCurrentUser }) => (
           }}
           variant="body1"
         >
-          Lorem ipsum dolor sit amet
+          {text || '--'}
         </Typography>
         <Typography
           sx={{
@@ -53,7 +56,7 @@ const Message = ({ isCurrentUser }) => (
           variant="caption"
           gutterBottom
         >
-          Lorem ipsum dolor sit amet
+          {author || '--'}
         </Typography>
       </CardContent>
     </Card>
@@ -61,6 +64,14 @@ const Message = ({ isCurrentUser }) => (
 );
 
 const Messages = () => {
+
+  const {messages, getChatMessages} = useMessagesFunctions();
+  const { user } = useAuthValue();
+
+  useEffect(()=>{
+    getChatMessages();
+  }, [])
+
   return (
     <Paper
       elevation={6}
@@ -71,29 +82,24 @@ const Messages = () => {
         overflowY: "scroll",
       }}
     >
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-      <Message isCurrentUser />
-      <Message />
-      <Message />
-      <Message />
-      <Message isCurrentUser />
-      <Message />
-      <Message />
-      <Message />
-      <Message isCurrentUser />
+      {messages.length && messages.map((message) => (
+        <Message isCurrentUser={message.uid === user.uid} key={message.id} text={message?.text} author={message?.name} avatar={message.avatar} />
+      ))}
     </Paper>
   );
 };
 
 Message.defaultProps = {
   isCurrentUser: false,
+  text: null,
+  author: null,
+  avatar: null,
 };
 
 Message.propTypes = {
+  text: PropTypes.string,
+  author: PropTypes.string,
+  avatar: PropTypes.string,
   isCurrentUser: PropTypes.bool,
 };
 

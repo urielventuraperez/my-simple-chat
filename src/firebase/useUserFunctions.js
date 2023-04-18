@@ -20,11 +20,12 @@ export function useUserFunctions() {
         setLoading(false);
         onSuccess();
       })
-      .catch((err) =>
+      .catch((err) => {
+        setLoading(false);
         setError(
           err.message || "Failed to retrieve the user login, try again later."
-        )
-      );
+        );
+      });
   };
 
   const register = (data, onSuccess = () => {}) => {
@@ -37,9 +38,12 @@ export function useUserFunctions() {
         setLoading(false);
         onSuccess();
       })
-      .catch((err) =>
-        setError(err.message || "Failed to register the user, try again later.")
-      );
+      .catch((err) => {
+        setLoading(false);
+        setError(
+          err.message || "Failed to register the user, try again later."
+        );
+      });
   };
 
   return {

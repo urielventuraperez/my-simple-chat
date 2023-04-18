@@ -17,6 +17,8 @@ import { firebaseAuth } from "@/firebase/config";
 import { useAuthValue } from "@/context/AuthContext";
 
 function Navbar() {
+  const {user} = useAuthValue();
+  console.log(user);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
   const handleOpenUserMenu = (event) => {
