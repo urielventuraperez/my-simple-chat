@@ -70,7 +70,10 @@ const Messages = () => {
 
   useEffect(()=>{
     getChatMessages();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  console.log(messages);
 
   return (
     <Paper
@@ -83,7 +86,7 @@ const Messages = () => {
       }}
     >
       {messages.length && messages.map((message) => (
-        <Message isCurrentUser={message.uid === user.uid} key={message.id} text={message?.text} author={message?.name} avatar={message.avatar} />
+        <Message isCurrentUser={message.uid === user.uid} key={message.id} text={message?.text} author={message?.name || message?.email} avatar={message.avatar} />
       ))}
     </Paper>
   );

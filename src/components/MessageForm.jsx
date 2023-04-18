@@ -10,19 +10,21 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { firebaseDB } from "@/firebase/config";
 
 export default function MessageForm() {
-  const { handleSubmit, control } = useForm();
+  const { handleSubmit, control, setValue } = useForm();
 
   const {user} = useAuthValue()
 
   const onPostMessage = async (data) => {
-    const { uid, displayName, photoURL } = user;
+    const { uid, displayName, photoURL, email } = user;
     await addDoc(collection(firebaseDB, "messages"), {
       text: data.message,
       name: displayName,
+      email,
       avatar: photoURL,
       createdAt: serverTimestamp(),
       uid,
     });
+    setValue('message', '')
   };
 
   return (
