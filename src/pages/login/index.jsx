@@ -5,6 +5,7 @@ import {
   Box,
 } from "@mui/material";
 import LoginForm from "@/components/LoginForm";
+import Footer from "@/components/Footer";
 
 export default function LoginPage() {
   return (
@@ -31,6 +32,7 @@ export default function LoginPage() {
               Please, log in to continue
             </Typography>
             <LoginForm />
+            <Box mt={4}><Footer /></Box>
           </Box>
         </Grid>
         <Grid

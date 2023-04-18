@@ -5,6 +5,7 @@ import {
   Box,
 } from "@mui/material";
 import RegistrationForm from "@/components/RegistrationForm";
+import Footer from "@/components/Footer";
 
 export default function SignUpPage() {
   return (
@@ -31,6 +32,7 @@ export default function SignUpPage() {
               Create an account and let&apos;s get started a conversation
             </Typography>
             <RegistrationForm />
+            <Box mt={4}><Footer /></Box>
           </Box>
         </Grid>
         <Grid

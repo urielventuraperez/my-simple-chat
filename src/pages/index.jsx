@@ -3,6 +3,7 @@ import { Grid, Typography, Box } from "@mui/material";
 import Navbar from "@/components/Navbar";
 import Messages from "@/components/Messages";
 import MessageForm from "@/components/MessageForm";
+import Footer from "@/components/Footer";
 
 export default function Chat() {
   return (
@@ -26,6 +27,7 @@ export default function Chat() {
           </Box>
         </Grid>
       </Grid>
+      <Footer />
     </>
   );
 }
