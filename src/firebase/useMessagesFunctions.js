@@ -30,6 +30,8 @@ export function useMessagesFunctions() {
       QuerySnapshot.forEach((doc) => {
         messages.push({ ...doc.data(), id: doc.id });
       });
+      setLoading(false);
+      setLoaded(Boolean(messages.length))
       setMessages(messages);
     });
   };

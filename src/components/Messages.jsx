@@ -8,6 +8,7 @@ import {
   Typography,
   Avatar,
   Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import { useMessagesFunctions } from "@/firebase/useMessagesFunctions";
 import { useAuthValue } from "@/context/AuthContext";
@@ -21,7 +22,13 @@ const Message = ({ isCurrentUser, text, author, avatar }) => (
       justifyContent: isCurrentUser ? "end" : "start",
     }}
   >
-    <Tooltip title={author || '--'}>{avatar ? <Avatar src={avatar} /> : <Avatar>{author.charAt(0).toUpperCase()}</Avatar>}</Tooltip>
+    <Tooltip title={author || "--"}>
+      {avatar ? (
+        <Avatar src={avatar} />
+      ) : (
+        <Avatar>{author.charAt(0).toUpperCase()}</Avatar>
+      )}
+    </Tooltip>
     <Card
       variant="outlined"
       sx={{
@@ -44,7 +51,7 @@ const Message = ({ isCurrentUser, text, author, avatar }) => (
           }}
           variant="body1"
         >
-          {text || '--'}
+          {text || "--"}
         </Typography>
         <Typography
           sx={{
@@ -56,7 +63,7 @@ const Message = ({ isCurrentUser, text, author, avatar }) => (
           variant="caption"
           gutterBottom
         >
-          {author || '--'}
+          {author || "--"}
         </Typography>
       </CardContent>
     </Card>
@@ -64,14 +71,13 @@ const Message = ({ isCurrentUser, text, author, avatar }) => (
 );
 
 const Messages = () => {
-
-  const {messages, getChatMessages} = useMessagesFunctions();
+  const { loaded, loading, messages, getChatMessages } = useMessagesFunctions();
   const { user } = useAuthValue();
 
-  useEffect(()=>{
+  useEffect(() => {
     getChatMessages();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Paper
@@ -83,9 +89,28 @@ const Messages = () => {
         overflowY: "scroll",
       }}
     >
-      {messages.length && messages.map((message) => (
-        <Message isCurrentUser={message.uid === user.uid} key={message.id} text={message?.text} author={message?.name || message?.email} avatar={message.avatar} />
-      ))}
+      {loading && (
+        <Box
+          sx={{
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
+      {loaded &&
+        messages.map((message) => (
+          <Message
+            isCurrentUser={message.uid === user.uid}
+            key={message.id}
+            text={message?.text}
+            author={message?.name || message?.email}
+            avatar={message.avatar}
+          />
+        ))}
     </Paper>
   );
 };
